@@ -1,22 +1,10 @@
 ﻿(function () {
-    // Button event to test for fail (optional)
-    $("#click-me").bind("click",
-        function() {
-            myhub.server.getDateTime()
-                .done(function (data) {
-                    writeToPage(data);
-                })
-                .fail(function (e) {
-                    writeToPage(e + ": Failed getting date from server");
-                });
-        });
-
     //Open the connection to the hub
-    var myhub = $.connection.myHub;
+    var myhub = $.connection.chat;
     $.connection.hub.start()
         .done(function () {
             console.log("Hub Connected");
-            myhub.server.announce("Pedro");
+            myhub.server.announceToEverybody("Pedro");
             myhub.server.getDateTime()
                 .done(function(data) {
                     writeToPage(data);
@@ -37,6 +25,20 @@
     var writeToPage = function (message) {
         $("#welcome").append(message +" <br/>");
     }
+
+
+
+    // Button event to test for fail (optional)
+    $("#click-me").bind("click",
+        function () {
+            myhub.server.getDateTime()
+                .done(function (data) {
+                    writeToPage(data);
+                })
+                .fail(function (e) {
+                    writeToPage(e + ": Failed getting date from server");
+                });
+        });
 })()
 
 
